@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class CalculatorImpl implements CalculatorService {
     @Override
     public String cal(int a, int b, String ope) {
-        int tmp = 0;
+        double tmp = 0;
         try
         {
             if(ope.equals("pl"))
