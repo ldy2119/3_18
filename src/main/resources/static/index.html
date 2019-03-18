@@ -3,15 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
 </head>
 <body>
     <div>
         <h1>계산기 프로그램</h1>
         <input id = "first">
-        <input id = "second">
-        <br>
+        <input id = "second"><br>
 
+        <input type="radio" name="operator" value="pl" checked="checked">+<br>
+        <input type="radio" name="operator" value="mi">-<br>
+        <input type="radio" name="operator" value="mu">*<br>
+        <input type="radio" name="operator" value="di">/<br>
 
+        <input type = "button" onclick="send()" value="계산하기!"><br>
+        <div id = "display-response"></div>
     </div>
+    <script>
+        async function send() {
+            let a = $("#first").val().trim();
+            let b = $("#second").val().trim();
+            let ope = $('input:radio[name="operator"]:checked').val();
+
+            if(!a || a === '' || !b || b === '' || !ope || ope === '')
+            {
+                $('#display-response').html("입력해주세요");
+                return;
+            }
+
+            try
+            {
+                a = parseInt(a);
+                b = parseInt(b);
+                let response = await $.get('/cal/' + a + "/" + b + "/" + ope);
+                $('#display-response').html(JSON.stringify(response));
+            }
+            catch(err)
+            {
+                $('#display-response').html(JSON.stringify(err));
+            }
+        }
+    </script>
 </body>
 </html>
